@@ -199,12 +199,12 @@ export async function parseHomeSections(sectionCallback: (section: HomeSection) 
     }
 
     let promises = [
-        handleHomeSection(createHomeSection({ id: "top", title: "TOP" }), $ =>
-            $('.featured_item').toArray().map(e => parseTopItem($, e))
-        ),
-
         handleHomeSection(createHomeSection({ id: "featured", title: "FEATURED" }), $ =>
             $('ul.rslides > li').toArray().map(e => parseFeaturedItem($, e))
+        ),
+
+        handleHomeSection(createHomeSection({ id: "top", title: "TOP" }), $ =>
+            $('.featured_item').toArray().map(e => parseTopItem($, e))
         ),
 
         handleHomeSection(createHomeSection({ id: "today", title: "UPDATED TODAY" }), $ =>
