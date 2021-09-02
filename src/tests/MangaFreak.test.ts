@@ -79,8 +79,8 @@ describe('MangaFreak Tests', function () {
     it("Testing Home-Page aquisition", async () => {
         let homePages = await wrapper.getHomePageSections(source)
         expect(homePages, "No response from server").to.exist
-        expect(homePages[0], "No top section available").to.exist
-        expect(homePages[1], "No featured section available").to.exist
+        expect(homePages[0], "No featured section available").to.exist
+        expect(homePages[1], "No top section available").to.exist
         expect(homePages[2], "No today section available").to.exist
         expect(homePages[3], "No yesterday section available").to.exist
         expect(homePages[4], "No older section available").to.exist

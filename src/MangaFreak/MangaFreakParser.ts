@@ -266,12 +266,7 @@ function getImageForId(id: string) {
 }
 
 function getIdFromImageLink(imageLink: Cheerio): string | undefined {
-    const id = getIdFromRelativeLink(imageLink.attr("href") ?? "")
-    return id
-}
-
-function getIdFromRelativeLink(relLink: string): string | undefined {
-    const idRegex = relLink.match(/Manga\/(.+)/)
+    const idRegex = imageLink.attr("href")?.match(/Manga\/(.+)/)
 
     if (!idRegex || idRegex.length < 2) { return undefined }
 
