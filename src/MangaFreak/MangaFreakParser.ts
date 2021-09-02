@@ -231,7 +231,7 @@ export function parseLatestRelease($: CheerioStatic): { updatedDate: Date, id: s
     today.setMinutes(0)
 
     return $('.latest_releases_item').toArray().map(element => {
-        const id = getIdFromRelativeLink($('.latest_releases_info > a', element).attr("href") ?? "")
+        const id = getIdFromImageLink($('.latest_releases_info > a', element))
 
         verifyOrThrow("Missing id!", id)
 
