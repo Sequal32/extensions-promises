@@ -27,13 +27,11 @@ export function parseMangaDetails(mangaId: string, $: CheerioStatic): Manga {
     verifyOrThrow("Error parsing titles!", titles)
 
     // Tags
-    let tags: Tag[] = []
-
-    mangaSeriesData.find('.series_sub_genre_list > a').each((_, element) => {
+    const tags = mangaSeriesData.find('.series_sub_genre_list > a').toArray().map(element => {
         const id = element.attribs['href']
         const label = element.firstChild?.data
 
-        if (!allDefined(id, label)) { return }
+        verifyOrThrow(`Missing metadata on tags! Got id: ${id}, label: ${label}`)
 
         return createTag({
             id,
@@ -145,7 +143,7 @@ function parseTopItem($: CheerioStatic, element: CheerioElement): MangaTile {
     const id = getIdFromImageLink(itemImageLink)
     const title = titleLink.contents()[0]?.data
 
-    verifyOrThrow(`Missing metadata in featured section! Got (id: ${id}, title: ${title})`, id, title)
+    verifyOrThrow(`Missing metadata in featured section! Got id: ${id}, title: ${title}`, id, title)
 
     return createMangaTile({
         id: id!,
