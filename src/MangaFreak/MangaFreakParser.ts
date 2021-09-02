@@ -18,13 +18,16 @@ export function parseMangaDetails(mangaId: string, $: CheerioStatic): Manga {
     const mangaDataTextArray = mangaSeriesData.find('div').toArray()
     const mangaSeriesDataRows = mangaSeriesData.children()
 
-    const titles = mangaSeriesDataRows[0]?.firstChild?.data?.split(', ')
+    const alt_titles = mangaSeriesData[0]?.firstChild?.data?.split(', ').map(t => t.trim())
+    const title = mangaSeriesDataRows[0]?.firstChild?.data
     const author = mangaSeriesDataRows[3]?.firstChild?.data
     const artist = mangaSeriesDataRows[4]?.firstChild?.data
-    const description = mangaDescription.text()
     const status = getStatus(mangaDataTextArray[1]?.firstChild?.data)
+    const description = mangaDescription.text()
 
-    verifyOrThrow("Error parsing titles!", titles)
+    verifyOrThrow("Error parsing titles!", title, alt_titles)
+
+    const titles = [title!, ...alt_titles!]
 
     // Tags
     const tags = mangaSeriesData.find('.series_sub_genre_list > a').toArray().map(element => {
@@ -43,7 +46,7 @@ export function parseMangaDetails(mangaId: string, $: CheerioStatic): Manga {
 
     return createManga({
         id: mangaId,
-        titles: titles!,
+        titles: titles,
         image: getImageForId(mangaId),
         rating: 0,
         status: status,
